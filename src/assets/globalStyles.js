@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 * {
     box-sizing: border-box;
+    transition: 300ms;
     --font-lexend: 'Lexend Deca', sans-serif;
     --font-playball: 'Playball', cursive;
     --color-logo-header: #126BA5;

@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import '../assets/reset.css';
-
+import ResetCss from '../assets/resetCss';
 import GlobalStyle from '../assets/globalStyles';
+
 import SignInScreen from './SignInScreen';
 import SignUpScreen from './SignUpScreen';
 import HabitScreen from './HabitScreen';
@@ -12,6 +12,7 @@ import HistoryScreen from './HistoryScreen';
 function App() {
     return (
     <>
+        <ResetCss />
         <GlobalStyle />
         <BrowserRouter>
             <Routes>
