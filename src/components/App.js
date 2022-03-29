@@ -3,13 +3,25 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import '../assets/reset.css';
 
 import GlobalStyle from '../assets/globalStyles';
+import SignInScreen from './SignInScreen';
+import SignUpScreen from './SignUpScreen';
+import HabitScreen from './HabitScreen';
+import TodayScreen from './TodayScreen';
+import HistoryScreen from './HistoryScreen';
 
 function App() {
     return (
     <>
         <GlobalStyle />
-        <p>Oi, vish</p>
-        <h1>Oi</h1>
+        <BrowserRouter>
+            <Routes>
+                <Route path='/' element={<SignInScreen />} />
+                <Route path='/signup' element={<SignUpScreen />} />
+                <Route path='/habits' element={<HabitScreen />} />
+                <Route path='/today' element={<TodayScreen />} />
+                <Route path='/history' element={<HistoryScreen />} />
+            </Routes>
+        </BrowserRouter>
     </>
 )
 }

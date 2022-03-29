@@ -20,7 +20,6 @@ const GlobalStyle = createGlobalStyle`
     }
 
 body {
-    
 }
 `;
 
