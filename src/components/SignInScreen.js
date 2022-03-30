@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import {useState} from 'react';
+import {useState, useContext} from 'react';
+import {Link} from 'react-router-dom';
 
 import Logo from '../assets/trackit-logo.png';
+import TokenContext from '../contexts/TokenContext';
 
 function SignInScreen() {
 
@@ -18,7 +20,9 @@ function SignInScreen() {
             value={password} required></input>
             <button type="submit">Entrar</button>
         </form>
-        <p>Não tem uma conta? Cadastre-se!</p>
+        <Link to="/signup">
+            <p>Não tem uma conta? Cadastre-se!</p> 
+        </Link>
     </$LoginScreen>
     )
 }
@@ -98,4 +102,4 @@ const $LoginScreen = styled.main`
             color: var(--color-logo-header);
         }
     }
-`
+`;
