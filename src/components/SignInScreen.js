@@ -1,24 +1,58 @@
 import styled from 'styled-components';
+import axios from 'axios';
 import {useState, useContext} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import {ThreeDots} from 'react-loader-spinner';
 
 import Logo from '../assets/trackit-logo.png';
 import TokenContext from '../contexts/TokenContext';
 
 function SignInScreen() {
 
+    const {setToken} = useContext(TokenContext);
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
+
+    const bodyPost = {
+        email,
+        password
+    };
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        setLoading(true);
+
+        setTimeout(() => {
+            const promise = axios.post(URL, bodyPost);
+            promise.then(response => {
+                setToken(response.data.token);
+                navigate('/today');
+                setLoading(false);
+            });
+            promise.catch(error => {
+                console.log(error);
+                alert('Verifique seus dados ou tente novamente mais tarde!');
+                setLoading(false);
+            }); 
+        }, 1500)
+    }
 
     return (
     < $LoginScreen >
         <img src={Logo} />
-        <form>
+        <form onSubmit={handleSubmit}>
             <input type="email" placeholder="email" 
-            value={email} onChange={e => setEmail(e.target.value)} required></input>
-            <input type="text" onChange={e => setPassword(e.target.value)} placeholder="senha"
-            value={password} required></input>
-            <button type="submit">Entrar</button>
+            value={email} onChange={e => setEmail(e.target.value)} disabled={loading} required></input>
+            <input type="password" onChange={e => setPassword(e.target.value)} placeholder="senha"
+            value={password} disabled={loading} required></input>
+            <button type="submit" className={loading === false ? '' : 'loading'}>
+                {loading === false ? 'Entrar' : <ThreeDots color='#FFF' height={80} width={80} />}
+            </button>
         </form>
         <Link to="/signup">
             <p>Não tem uma conta? Cadastre-se!</p> 
@@ -66,6 +100,10 @@ const $LoginScreen = styled.main`
         &:focus {
             outline: none;
         }
+
+        &:disabled {
+            background-color: var(--color-input-disabled);
+        }
     }
 
     button {
@@ -76,6 +114,9 @@ const $LoginScreen = styled.main`
         background-color: var(--color-button-link);
         font-size: 100%;
         color: #FFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &:hover {
             cursor: pointer;
@@ -85,6 +126,11 @@ const $LoginScreen = styled.main`
 
         &:active {
             background-color: var(--color-logo-header);
+        }
+
+        &.loading {
+            opacity: 0.7;
+            pointer-events: none;
         }
     }
 

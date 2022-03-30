@@ -26,11 +26,10 @@ function SignUpScreen() {
 
     function handleSubmit(event) {
         event.preventDefault();
-
-        const promise = axios.post(URL, bodyPost);
         setLoading(true);
 
         setTimeout(() => {
+            const promise = axios.post(URL, bodyPost);
             promise.then(response => {
                 navigate('/');
                 setLoading(false);
