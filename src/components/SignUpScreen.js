@@ -29,14 +29,17 @@ function SignUpScreen() {
         setLoading(true);
 
         setTimeout(() => {
-            const promise = axios.post(URL, bodyPost);
-            promise.then(response => {
-                navigate('/');
+            axios
+            .post(URL, bodyPost)
+            .then((response) => {
+                navigate("/");
                 setLoading(false);
-            });
-            promise.catch(error => {
+            })
+            .catch((error) => {
                 console.log(error.response);
-                alert("Deu erro no seu cadastro! Verifique os dados ou tente novamente mais tarde");
+                alert(
+                "Deu erro no seu cadastro! Verifique os dados ou tente novamente mais tarde"
+                );
                 setLoading(false);
             });
             }, 1500);
@@ -44,7 +47,7 @@ function SignUpScreen() {
 
     return (
         < $LoginScreen >
-            <img src={Logo} />
+            <img src={Logo} alt='logo'/>
             <form onSubmit={handleSubmit}>
                 <input type="email" placeholder="email" value={email}
                 onChange={e => setEmail(e.target.value)} disabled={loading} required></input>
@@ -74,9 +77,11 @@ const $LoginScreen = styled.main`
     align-items: center;
     font-family: var(--font-lexend);
     font-weight: 400;
+    background-color: #FFF;
+    height: 100vh;
 
     img {
-        margin-top: 5%;
+        margin-top: 8%;
         width: 180px;
         margin-bottom: 33px;
     }

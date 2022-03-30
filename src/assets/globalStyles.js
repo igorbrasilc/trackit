@@ -18,9 +18,12 @@ const GlobalStyle = createGlobalStyle`
     --color-input-disabled: #F2F2F2;
     --color-text-input: #AFAFAF;
     --opacity-button-disabled: 0.7;
-    }
+    --max-height-header: 70px;
+    --max-height-footer: 70px;
+}
 
 body {
+    background-color: var(--color-input-disabled);
 }
 `;
 

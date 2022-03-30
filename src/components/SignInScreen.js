@@ -6,10 +6,12 @@ import {ThreeDots} from 'react-loader-spinner';
 
 import Logo from '../assets/trackit-logo.png';
 import TokenContext from '../contexts/TokenContext';
+import ImageContext from '../contexts/ImageContext';
 
 function SignInScreen() {
 
     const {setToken} = useContext(TokenContext);
+    const {setImage} = useContext(ImageContext);
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -28,23 +30,27 @@ function SignInScreen() {
         setLoading(true);
 
         setTimeout(() => {
-            const promise = axios.post(URL, bodyPost);
-            promise.then(response => {
+            axios
+            .post(URL, bodyPost)
+            .then((response) => {
                 setToken(response.data.token);
-                navigate('/today');
+                setImage(response.data.image);
+                navigate("/today");
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error.response);
+                alert(
+                "Deu erro no seu cadastro! Verifique os dados ou tente novamente mais tarde"
+                );
                 setLoading(false);
             });
-            promise.catch(error => {
-                console.log(error);
-                alert('Verifique seus dados ou tente novamente mais tarde!');
-                setLoading(false);
-            }); 
         }, 1500)
     }
 
     return (
     < $LoginScreen >
-        <img src={Logo} />
+        <img src={Logo} alt='logo'/>
         <form onSubmit={handleSubmit}>
             <input type="email" placeholder="email" 
             value={email} onChange={e => setEmail(e.target.value)} disabled={loading} required></input>
@@ -70,6 +76,8 @@ const $LoginScreen = styled.main`
     align-items: center;
     font-family: var(--font-lexend);
     font-weight: 400;
+    background-color: #FFF;
+    height: 100vh;
 
     img {
         margin-top: 8%;
