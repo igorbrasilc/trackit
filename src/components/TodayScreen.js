@@ -1,17 +1,42 @@
 import styled from 'styled-components';
 import React from 'react';
 import DayJS from 'react-dayjs';
-import 'dayjs/locale/pt-br';
 import dayjs from 'dayjs';
+import {useContext, useEffect, useState} from 'react';
+import TokenContext from '../contexts/TokenContext';
+import TodayContext from '../contexts/TodayContext';
 
 import Header from './Header';
 import Footer from './Footer';
 
 import Checkmark from '../assets/checkmark.svg';
+import axios from 'axios';
 
 function TodayScreen() {
 
+    const {token} = useContext(TokenContext);
+    const {setPercentageInfo} = useContext(TodayContext);
+    const [data, setData] = useState([]);
+
     const weekdayNumber = dayjs().day();
+    const URL_GET = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today';
+    // const URL_POST = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/ID_DO_HABITO/check';
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    };
+
+    useEffect(() => {
+        axios.
+        get(URL_GET, config)
+        .then(response => {
+            if (response.data.length > 0) {
+                setData(response.data);
+            }
+        })
+        .catch(error => console.log(error.response));
+    }, []);
 
     function getWeekday(weekday) {
         switch (weekday) {
@@ -25,69 +50,39 @@ function TodayScreen() {
         }
     }
 
+    const doneHabits = data.filter(habit => {
+        return habit.done === true;
+    });
+
+    const percentage = (doneHabits.length / data.length) * 100;
+
+    useEffect(() => {
+        setPercentageInfo(percentage);
+    }, [percentage]);
+
     return (
     < $TodayScreen >
         <Header />
         <section>
             <h2><DayJS format={`${getWeekday(weekdayNumber)}, DD-MM`}/></h2>
-            <p>Nenhum hábito concluído ainda</p>
+            <p>
+                {doneHabits.length === 0 ? 'Nenhum hábito concluído ainda' : 
+                `${percentage}% dos hábitos concluídos`}
+            </p>
         </section>
-        <article>
-            <div>
-                <h3>Ler 1 capítulo de livro</h3>
-                <p>Sequência atual: <span>3 dias</span></p>
-                <p>Seu recorde: <span>3 dias</span></p>
-            </div>
-            <img src={Checkmark} alt='checkmark-icon'/>
-        </article>
-        <article>
-            <div>
-                <h3>Ler 1 capítulo de livro</h3>
-                <p>Sequência atual: <span>3 dias</span></p>
-                <p>Seu recorde: <span>3 dias</span></p>
-            </div>
-            <img src={Checkmark} alt='checkmark-icon'/>
-        </article>
-        <article>
-            <div>
-                <h3>Ler 1 capítulo de livro</h3>
-                <p>Sequência atual: <span>3 dias</span></p>
-                <p>Seu recorde: <span>3 dias</span></p>
-            </div>
-            <img src={Checkmark} alt='checkmark-icon'/>
-        </article>
-        <article>
-            <div>
-                <h3>Ler 1 capítulo de livro</h3>
-                <p>Sequência atual: <span>3 dias</span></p>
-                <p>Seu recorde: <span>3 dias</span></p>
-            </div>
-            <img src={Checkmark} alt='checkmark-icon'/>
-        </article>
-        <article>
-            <div>
-                <h3>Ler 1 capítulo de livro</h3>
-                <p>Sequência atual: <span>3 dias</span></p>
-                <p>Seu recorde: <span>3 dias</span></p>
-            </div>
-            <img src={Checkmark} alt='checkmark-icon'/>
-        </article>
-        <article>
-            <div>
-                <h3>Ler 1 capítulo de livro</h3>
-                <p>Sequência atual: <span>3 dias</span></p>
-                <p>Seu recorde: <span>3 dias</span></p>
-            </div>
-            <img src={Checkmark} alt='checkmark-icon'/>
-        </article>
-        <article>
-            <div>
-                <h3>Ler 1 capítulo de livro</h3>
-                <p>Sequência atual: <span>3 dias</span></p>
-                <p>Seu recorde: <span>3 dias</span></p>
-            </div>
-            <img src={Checkmark} alt='checkmark-icon'/>
-        </article>
+        {data.map(habit => {
+            return (
+                <article>
+                    <div>
+                        <h3>{habit.name}</h3>
+                        <p>Sequência atual: <span>{habit.currentSequence}</span></p>
+                        <p>Seu recorde: <span>{habit.highestSequence}</span></p>
+                    </div>
+                    <img src={Checkmark} className={habit.done === true ? 'check' : ''} 
+                    alt='checkmark-icon'/>
+                </article>
+            )
+        })}
         <Footer />
     </$TodayScreen>
     )
@@ -151,6 +146,10 @@ const $TodayScreen = styled.main`
             &:hover {
                 cursor: pointer;
                 padding: 23px;
+            }
+
+            &.check {
+                background-color: var(--color-check);
             }
         }
 

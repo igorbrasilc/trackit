@@ -2,17 +2,21 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import {useContext} from 'react';
+
+import TodayContext from '../contexts/TodayContext';
 
 function Footer() {
 
     const navigate = useNavigate();
+    const {percentageInfo} = useContext(TodayContext);
 
     return (
         <FooterWrapper>
                 <p onClick={() => navigate('/habits')}>Hábitos</p>
                 <span onClick={() => navigate('/today')}>
                     <CircularProgressbar
-                        value={0}
+                        value={percentageInfo}
                         text={`Hoje`}
                         background
                         backgroundPadding={6}
