@@ -11,6 +11,8 @@ import CreateHabitBox from './CreateHabitBox';
 function HabitScreen() {
 
     const [creationBox, setCreationBox] = useState(false);
+    const [habitName, setHabitName] = useState('');
+    const [daysPicked, setDaysPicked] = useState([]);
 
     return (
         <>
@@ -22,7 +24,10 @@ function HabitScreen() {
                         <IoIosAdd />
                     </span>
                 </div>
-                {creationBox === false ? <></> : <CreateHabitBox callback={setCreationBox}/>}
+                {creationBox === false ? <></> : 
+                <CreateHabitBox callbackBox={setCreationBox} inputValue={habitName} 
+                setInputValue={(value) => setHabitName(value)}
+                daysPicked={daysPicked} setDaysPicked={setDaysPicked}/>}
                 
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
             </HabitScreenWrapper>

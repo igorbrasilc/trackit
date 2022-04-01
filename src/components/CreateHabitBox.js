@@ -8,11 +8,10 @@ import TokenContext from '../contexts/TokenContext';
 
 function CreateHabitBox(props) {
 
-    const [habitName, setHabitName] = useState('');
     const [loading, setLoading] = useState(false);
-    const [daysPicked, setDaysPicked] = useState([]);
+    // const [daysPicked, setDaysPicked] = useState([]);
     const {user, setUser} = useContext(TokenContext);
-    const {callback} = props;
+    const {callbackBox, inputValue, setInputValue, daysPicked, setDaysPicked} = props;
 
     const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
@@ -23,9 +22,18 @@ function CreateHabitBox(props) {
     };
 
     const bodyPost = {
-        name: habitName, 
+        name: inputValue, 
         days: daysPicked 
     };
+
+    function verifySelect(id) {
+        for (let i = 0; i < daysPicked.length; i++) {
+            if (daysPicked[i] === id) {
+                return 'selected'
+            }
+        }
+        return '';
+    }
 
     function handleClick(target) {
 
@@ -46,37 +54,43 @@ function CreateHabitBox(props) {
         event.preventDefault();
 
         setLoading(true);
-        axios.
-        post(URL, bodyPost, config)
-        .then(response => {
-            console.log(response.data);
-            callback(false);
-        })
-        .catch(error => 
-            {
-                console.log(error.response.data.message)
-                alert('Deu um erro, você não selecionou um dia né malandrinho(a)?');
+        setTimeout(() => {
+            axios.
+            post(URL, bodyPost, config)
+            .then(response => {
+                console.log(response.data);
+                callbackBox(false);
+                setInputValue('');
+                setLoading(false);
+                setDaysPicked([]);
             })
+            .catch(error => 
+                {
+                    console.log(error.response.data.message)
+                    alert('Deu um erro, você não selecionou um dia né malandrinho(a)?');
+                    setLoading(false);
+                })
+        }, 1500);
     }
 
     return (
         <BoxWrapper>
             <form onSubmit={handleSubmit}>
                 <div className="container-input">
-                    <input type="text" placeholder="nome do hábito" value={habitName}
-                    onChange={e => setHabitName(e.target.value)} disabled={loading} required/>
+                    <input type="text" placeholder="nome do hábito" value={inputValue}
+                    onChange={e => setInputValue(e.target.value)} disabled={loading} required/>
                 </div>
                 <div className={loading === false ? 'day-icons' : 'day-icons loading'}>
-                    <p id={0} className='' onClick={e => handleClick(e.target)}>D</p>
-                    <p id={1} className='' onClick={e => handleClick(e.target)}>S</p>
-                    <p id={2} className='' onClick={e => handleClick(e.target)}>T</p>
-                    <p id={3} className='' onClick={e => handleClick(e.target)}>Q</p>
-                    <p id={4} className='' onClick={e => handleClick(e.target)}>Q</p>
-                    <p id={5} className='' onClick={e => handleClick(e.target)}>S</p>
-                    <p id={6} className='' onClick={e => handleClick(e.target)}>S</p>
+                    <p id={0} className={verifySelect(0)} onClick={e => handleClick(e.target)}>D</p>
+                    <p id={1} className={verifySelect(1)} onClick={e => handleClick(e.target)}>S</p>
+                    <p id={2} className={verifySelect(2)} onClick={e => handleClick(e.target)}>T</p>
+                    <p id={3} className={verifySelect(3)} onClick={e => handleClick(e.target)}>Q</p>
+                    <p id={4} className={verifySelect(4)} onClick={e => handleClick(e.target)}>Q</p>
+                    <p id={5} className={verifySelect(5)} onClick={e => handleClick(e.target)}>S</p>
+                    <p id={6} className={verifySelect(6)} onClick={e => handleClick(e.target)}>S</p>
                 </div>
                 <div className="buttons">
-                    <p className="cancel" onClick={() => callback(false)}>Cancelar</p>
+                    <p className="cancel" onClick={() => callbackBox(false)}>Cancelar</p>
                     <button className={loading === false ? 'save' : 'save loading'} type="submit">
                     {loading === false ? <span>Salvar</span> : <ThreeDots color='#FFF' height={50} width={50} />}
                     </button>
@@ -187,6 +201,10 @@ const BoxWrapper = styled.section`
 
         &.loading {
             opacity: 0.7;
+
+            & p {
+                pointer-events: none;
+            }
         }
         
         & p {

@@ -53,7 +53,7 @@ function TodayScreen() {
         return habit.done === true;
     });
 
-    const percentage = (doneHabits.length / data.length) * 100;
+    const percentage = ((doneHabits.length / data.length) * 100).toFixed(0);
 
     useEffect(() => {
         setUser({...user, todayPercentage: percentage});
