@@ -27,9 +27,10 @@ align-items: flex-start;
 margin-left: 15px;
 margin-right: 15px;
 font-family: var(--font-lexend);
+margin-top: calc(var(--max-height-header) + 25px);
+margin-bottom: calc(var(--max-height-footer) + 40px);
 
 h1 {
-    margin-top: calc(var(--max-height-header) + 25px);
     font-size: 23px;
     line-height: 29px;
     color: var(--color-logo-header);

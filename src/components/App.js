@@ -20,7 +20,8 @@ function App() {
             token: '',
             image: '',
             todayPercentage: 0,
-            name: ''
+            name: '',
+            habits: []
         };
     });
 

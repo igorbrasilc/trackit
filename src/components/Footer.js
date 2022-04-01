@@ -10,7 +10,6 @@ function Footer() {
 
     const navigate = useNavigate();
     const {user} = useContext(TokenContext);
-    console.log(user);
 
     const percentage = {...user}.todayPercentage;
 
@@ -18,11 +17,9 @@ function Footer() {
 
         if (percentage !== null) {
             let percentageStr = percentage.toString();
-            console.log(percentageStr);
             if (percentageStr === 'NaN') return 0;
             else return percentage;
         } else {
-            console.log('passei aqui');
             return null;
         }
     }

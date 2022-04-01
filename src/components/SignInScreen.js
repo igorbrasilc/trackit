@@ -31,15 +31,10 @@ function SignInScreen() {
             axios
             .post(URL, bodyPost)
             .then((response) => {
-                console.log(response.data)
                 setUser({...user, 
                 token: response.data.token,
                 image: response.data.image,
                 name: response.data.name});
-                // setUser({...user, image: response.data.image});
-                // setUser({...user, name: response.data.name});
-                // setUser({...user, token: response.data.token});
-                console.log(user);
                 navigate("/today");
                 setLoading(false);
             })
