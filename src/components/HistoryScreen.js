@@ -1,9 +1,44 @@
 import styled from 'styled-components';
 
+import Header from './Header';
+import Footer from './Footer';
+
 function HistoryScreen() {
     return (
-        <>Aqui vai a tela de histórico</>
+        <>
+            <Header />
+                <History>
+                    <h1>Histórico</h1>
+                    <h2>Em breve você poderá ver o histórico dos seus hábitos aqui!</h2>
+                </History>
+            <Footer />
+        </>
     )
 }
 
 export default HistoryScreen;
+
+const History = styled.main`
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+justify-content: center;
+align-items: flex-start;
+margin-left: 15px;
+margin-right: 15px;
+font-family: var(--font-lexend);
+
+h1 {
+    margin-top: calc(var(--max-height-header) + 25px);
+    font-size: 23px;
+    line-height: 29px;
+    color: var(--color-logo-header);
+}
+
+h2 {
+    margin-top: 17px;
+    font-size: 18px;
+    line-height: 22px;
+    color: var(--color-text-black);
+}
+`

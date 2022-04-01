@@ -40,6 +40,7 @@ const PopUp = styled.aside`
     z-index: 1;
     position: fixed;
     top: 50px;
+    left: 15%;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -47,6 +48,7 @@ const PopUp = styled.aside`
     align-items: center;
     border: 2px solid var(--color-logo-header);
     background-image: linear-gradient(to right, #F2F2F2 , #52B6FF);
+    font-family: var(--font-lexend);
 
     img {
         position: absolute;

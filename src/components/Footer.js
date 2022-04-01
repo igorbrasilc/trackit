@@ -10,8 +10,22 @@ function Footer() {
 
     const navigate = useNavigate();
     const {user} = useContext(TokenContext);
+    console.log(user);
 
-    const percentage = user.todayPercentage;
+    const percentage = {...user}.todayPercentage;
+
+    function validatePercentage(percentage) {
+
+        if (percentage !== null) {
+            let percentageStr = percentage.toString();
+            console.log(percentageStr);
+            if (percentageStr === 'NaN') return 0;
+            else return percentage;
+        } else {
+            console.log('passei aqui');
+            return null;
+        }
+    }
 
     return percentage === 100 ? (
         <FooterWrapper>
@@ -38,7 +52,7 @@ function Footer() {
                 <p onClick={() => navigate('/habits')}>Hábitos</p>
                 <span onClick={() => navigate('/today')}>
                     <CircularProgressbar
-                        value={percentage}
+                        value={validatePercentage(percentage)}
                         text={`Hoje`}
                         background
                         backgroundPadding={6}
@@ -69,6 +83,7 @@ const FooterWrapper = styled.footer`
     display: flex;
     align-items: center;
     justify-content: space-around;
+    font-family: var(--font-lexend);
 
     & span {
         width: 91px;
