@@ -6,12 +6,10 @@ import {ThreeDots} from 'react-loader-spinner';
 
 import Logo from '../assets/trackit-logo.png';
 import TokenContext from '../contexts/TokenContext';
-import ImageContext from '../contexts/ImageContext';
 
 function SignInScreen() {
 
-    const {setToken} = useContext(TokenContext);
-    const {setImage} = useContext(ImageContext);
+    const {user, setUser} = useContext(TokenContext);
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -33,8 +31,15 @@ function SignInScreen() {
             axios
             .post(URL, bodyPost)
             .then((response) => {
-                setToken(response.data.token);
-                setImage(response.data.image);
+                console.log(response.data)
+                setUser({...user, 
+                token: response.data.token,
+                image: response.data.image,
+                name: response.data.name});
+                // setUser({...user, image: response.data.image});
+                // setUser({...user, name: response.data.name});
+                // setUser({...user, token: response.data.token});
+                console.log(user);
                 navigate("/today");
                 setLoading(false);
             })

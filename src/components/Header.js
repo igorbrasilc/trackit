@@ -1,17 +1,23 @@
 import styled from 'styled-components';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 
-import ImageContext from '../contexts/ImageContext';
+import TokenContext from '../contexts/TokenContext';
+
+import ChangeAccountPopUp from './ChangeAccountPopUp';
 
 function Header() {
 
-    const {image} = useContext(ImageContext);
+    const {user} = useContext(TokenContext);
+    const [popUp, setPopUp] = useState(false);
 
     return (
-        <HeaderWrapper>
-            <h1>TrackIt</h1>
-            <img src={image} alt='user-image'/>
-        </HeaderWrapper>
+        <>
+            <HeaderWrapper>
+                <h1>TrackIt</h1>
+                <img src={user.image} onClick={() => setPopUp(true)} alt='user-image' disabled={popUp} />
+            </HeaderWrapper>
+            {popUp === true ? <ChangeAccountPopUp callback={setPopUp} /> : <></>}
+        </>
     )
 }
 
@@ -38,6 +44,15 @@ const HeaderWrapper = styled.header`
         border-radius: 50%;
         margin: 10px;
         margin-right: 15px;
+        border: 2px solid white;
+
+        &:hover {
+            width: 200px;
+            height: 200px;
+            margin-top: 150px;
+            margin-left: -20px;
+            cursor: pointer;
+        }
     }
 
     h1 {

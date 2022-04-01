@@ -4,19 +4,41 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {useContext} from 'react';
 
-import TodayContext from '../contexts/TodayContext';
+import TokenContext from '../contexts/TokenContext';
 
 function Footer() {
 
     const navigate = useNavigate();
-    const {percentageInfo} = useContext(TodayContext);
+    const {user} = useContext(TokenContext);
 
-    return (
+    const percentage = user.todayPercentage;
+
+    return percentage === 100 ? (
         <FooterWrapper>
                 <p onClick={() => navigate('/habits')}>Hábitos</p>
                 <span onClick={() => navigate('/today')}>
                     <CircularProgressbar
-                        value={percentageInfo}
+                        value={percentage}
+                        text={`Hoje`}
+                        background
+                        backgroundPadding={6}
+                        styles={buildStyles({
+                        backgroundColor: '#8FC549',
+                        textColor: "#fff",
+                        pathColor: "#fff",
+                        trailColor: "transparent"
+                        })}
+                    />
+                </span>
+                <p onClick={() => navigate('/history')}>Histórico</p>
+        </FooterWrapper>
+    ) :
+    (
+        <FooterWrapper>
+                <p onClick={() => navigate('/habits')}>Hábitos</p>
+                <span onClick={() => navigate('/today')}>
+                    <CircularProgressbar
+                        value={percentage}
                         text={`Hoje`}
                         background
                         backgroundPadding={6}
