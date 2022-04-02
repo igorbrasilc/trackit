@@ -9,8 +9,7 @@ import TokenContext from '../contexts/TokenContext';
 function CreateHabitBox(props) {
 
     const [loading, setLoading] = useState(false);
-    // const [daysPicked, setDaysPicked] = useState([]);
-    const {user, setUser} = useContext(TokenContext);
+    const {user} = useContext(TokenContext);
     const {callbackBox, inputValue, setInputValue, daysPicked, setDaysPicked} = props;
 
     const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
@@ -57,8 +56,7 @@ function CreateHabitBox(props) {
         setTimeout(() => {
             axios.
             post(URL, bodyPost, config)
-            .then(response => {
-                console.log(response.data);
+            .then(() => {
                 callbackBox(false);
                 setInputValue('');
                 setLoading(false);

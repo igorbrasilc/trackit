@@ -24,6 +24,7 @@ function Header() {
 export default Header;
 
 const HeaderWrapper = styled.header`
+    z-index: 1;
     width: 100vw;
     height: auto;
     max-height: var(--max-height-header); 

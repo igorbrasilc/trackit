@@ -1,18 +1,42 @@
 import styled from 'styled-components';
+import axios from 'axios';
 import { IoIosAdd } from 'react-icons/io';
 
-import {useState} from 'react';
+import {useState, useContext, useEffect} from 'react';
 
 import Header from './Header';
 import Footer from './Footer';
 import CreateHabitBox from './CreateHabitBox';
+import MyHabitsMounted from './MyHabitsMounted';
+import TokenContext from '../contexts/TokenContext';
 
 
 function HabitScreen() {
 
+    const {user} = useContext(TokenContext);
+
     const [creationBox, setCreationBox] = useState(false);
+    const [render, setRender] = useState(false);
     const [habitName, setHabitName] = useState('');
     const [daysPicked, setDaysPicked] = useState([]);
+    const [userHabitList, setUserHabitList] = useState([]);
+
+    const URL_GET = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${user.token}` 
+        }
+    };
+
+    useEffect(() => {
+        axios.
+        get(URL_GET, config)
+        .then(response => {
+            console.log(response.data);
+            setUserHabitList(response.data);
+        })
+    }, [render])
 
     return (
         <>
@@ -28,8 +52,9 @@ function HabitScreen() {
                 <CreateHabitBox callbackBox={setCreationBox} inputValue={habitName} 
                 setInputValue={(value) => setHabitName(value)}
                 daysPicked={daysPicked} setDaysPicked={setDaysPicked}/>}
-                
-                <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                {2 === 3 ? <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                :
+                <MyHabitsMounted habitList={userHabitList} setRender={setRender} />}
             </HabitScreenWrapper>
             <Footer />
         </>
