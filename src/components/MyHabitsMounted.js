@@ -1,26 +1,56 @@
 import styled from 'styled-components';
+import axios from 'axios';
 import {BsTrash} from 'react-icons/bs';
+
+import {useContext} from 'react';
+
+import TokenContext from '../contexts/TokenContext';
 
 function MyHabitsMounted(props) {
 
-    const {habitList, setRender} = props;
+    const {habitList, setRender, render} = props;
+    const {user} = useContext(TokenContext);
 
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${user.token}` 
+        }
+    };
+    
     function verifySelect(id, days) {
-       for (let i = 0; i < days.length; i++) {
-           if (days[i] === id) {
-               return 'selected'
-           }
-       }
-       
+        for (let i = 0; i < days.length; i++) {
+            if (days[i] === id) {
+                return 'selected'
+            }
+        }
+        
         return '';
+    }
+    
+    function handleClick(id) {
+
+    let confirmation = window.confirm('Deseja excluir este hábito? Ele será apagado da sua semana, da sua vida e do seu ser... beba água');
+    
+    if (confirmation === true) {
+        const URL_DELETE = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;
+    
+        axios.delete(URL_DELETE, config)
+        .then(() => {
+            setRender(!render);
+        })
+        .catch(error => {
+            console.log(error.response);
+            alert('Não deu pra deletar esse hábito... Ou é um hábito essencial ou o servidor deu erro ou você não bebeu água');
+        })    
+    }
     }
 
     return (
         habitList.map(habit => {
             return (
-                <HabitWrapper>
+                <HabitWrapper key={habit.id}>
                     <h3>{habit.name}</h3>
-                    <BsTrash />
+                    <BsTrash className={habit.id} onClick={e => handleClick([...e.target.classList].toString())}/>
                     <div className='day-icons'>
                         <p id={0} className={verifySelect(0, habit.days)}>D</p>
                         <p id={1} className={verifySelect(1, habit.days)}>S</p>

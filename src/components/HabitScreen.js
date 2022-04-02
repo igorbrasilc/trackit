@@ -44,16 +44,17 @@ function HabitScreen() {
             })
             .catch(error => {
                 console.error(error);
+                alert('Não foi possivel criar o hábito... verifique o console');
                 setLoading(false);
             })
-        }, 1500);
+        }, 800);
 
     }, [render]);
 
     function renderController() {
-        if (loading === true) return <ThreeDots color='#126BA5' height={80} width={80} />;
+        if (loading === true) return <ThreeDots color='#126BA5' height={80} width={80} className="loading-svg" />;
         else if (userHabitList.length === 0) return <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>;
-        else return <MyHabitsMounted habitList={userHabitList} setRender={setRender} />;
+        else return <MyHabitsMounted habitList={userHabitList} setRender={setRender} render={render} />;
     }
 
     function creationBoxController() {
@@ -74,7 +75,7 @@ function HabitScreen() {
                 <div>
                     <h1>Meus hábitos</h1>
                     <span onClick={() => setCreationBox(true)} disabled={creationBox}>
-                        <IoIosAdd />
+                        <IoIosAdd className="add-icon" />
                     </span>
                 </div>
                 {renderCreationBox}
@@ -128,7 +129,7 @@ const HabitScreenWrapper = styled.main`
             }
         }
 
-        & svg {
+        & .add-icon {
             font-size: 27px;
             color: white;
             font-weight: 400;

@@ -146,6 +146,10 @@ const BoxWrapper = styled.section`
             align-items: center;
             justify-content: center;
 
+            & svg {
+                margin-left: 0;
+            }
+
             & span {
                 margin-bottom: 28px;
             }
