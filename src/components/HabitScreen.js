@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import axios from 'axios';
 import { IoIosAdd } from 'react-icons/io';
+import {ThreeDots} from 'react-loader-spinner';
 
 import {useState, useContext, useEffect} from 'react';
 
@@ -20,6 +21,7 @@ function HabitScreen() {
     const [habitName, setHabitName] = useState('');
     const [daysPicked, setDaysPicked] = useState([]);
     const [userHabitList, setUserHabitList] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const URL_GET = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
@@ -30,13 +32,39 @@ function HabitScreen() {
     };
 
     useEffect(() => {
-        axios.
-        get(URL_GET, config)
-        .then(response => {
-            console.log(response.data);
-            setUserHabitList(response.data);
-        })
-    }, [render])
+        
+        setLoading(true);
+
+        setTimeout(() => {
+            axios.
+            get(URL_GET, config)
+            .then(response => {
+                setUserHabitList(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error(error);
+                setLoading(false);
+            })
+        }, 1500);
+
+    }, [render]);
+
+    function renderController() {
+        if (loading === true) return <ThreeDots color='#126BA5' height={80} width={80} />;
+        else if (userHabitList.length === 0) return <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>;
+        else return <MyHabitsMounted habitList={userHabitList} setRender={setRender} />;
+    }
+
+    function creationBoxController() {
+        if (creationBox === false) return <></>;
+        else return <CreateHabitBox callbackBox={setCreationBox} inputValue={habitName} 
+        setInputValue={(value) => setHabitName(value)}
+        daysPicked={daysPicked} setDaysPicked={setDaysPicked}/>;
+    }
+
+    const renderHabits = renderController();
+    const renderCreationBox = creationBoxController();
 
     return (
         <>
@@ -48,13 +76,8 @@ function HabitScreen() {
                         <IoIosAdd />
                     </span>
                 </div>
-                {creationBox === false ? <></> : 
-                <CreateHabitBox callbackBox={setCreationBox} inputValue={habitName} 
-                setInputValue={(value) => setHabitName(value)}
-                daysPicked={daysPicked} setDaysPicked={setDaysPicked}/>}
-                {2 === 3 ? <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-                :
-                <MyHabitsMounted habitList={userHabitList} setRender={setRender} />}
+                {renderCreationBox}
+                {renderHabits}
             </HabitScreenWrapper>
             <Footer />
         </>
@@ -71,6 +94,10 @@ const HabitScreenWrapper = styled.main`
     font-family: var(--font-lexend);
     display: flex;
     flex-direction: column;
+
+    svg {
+        margin-left: 40%;
+    }
 
     div {
         display: flex;
@@ -104,6 +131,7 @@ const HabitScreenWrapper = styled.main`
             font-size: 27px;
             color: white;
             font-weight: 400;
+            margin-left: 0;
         }
     }
 

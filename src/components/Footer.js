@@ -24,8 +24,6 @@ function Footer() {
         }
     }
 
-    console.log(percentage);
-
     return percentage == 100 ? (
         <FooterWrapper>
                 <p onClick={() => navigate('/habits')}>Hábitos</p>
