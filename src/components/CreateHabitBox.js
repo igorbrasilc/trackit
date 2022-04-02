@@ -10,7 +10,9 @@ function CreateHabitBox(props) {
 
     const [loading, setLoading] = useState(false);
     const {user} = useContext(TokenContext);
-    const {callbackBox, inputValue, setInputValue, daysPicked, setDaysPicked} = props;
+
+    const {callbackBox, inputValue, setInputValue, daysPicked, 
+            setDaysPicked, setRender, render} = props;
 
     const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
@@ -61,6 +63,7 @@ function CreateHabitBox(props) {
                 setInputValue('');
                 setLoading(false);
                 setDaysPicked([]);
+                setRender(!render);
             })
             .catch(error => 
                 {

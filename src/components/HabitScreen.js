@@ -60,7 +60,8 @@ function HabitScreen() {
         if (creationBox === false) return <></>;
         else return <CreateHabitBox callbackBox={setCreationBox} inputValue={habitName} 
         setInputValue={(value) => setHabitName(value)}
-        daysPicked={daysPicked} setDaysPicked={setDaysPicked}/>;
+        daysPicked={daysPicked} setDaysPicked={setDaysPicked} setRender={setRender}
+        render={render}/>;
     }
 
     const renderHabits = renderController();
