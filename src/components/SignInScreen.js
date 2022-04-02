@@ -7,11 +7,14 @@ import {ThreeDots} from 'react-loader-spinner';
 import Logo from '../assets/trackit-logo.png';
 import TokenContext from '../contexts/TokenContext';
 
-function SignInScreen() {
 
+function SignInScreen() {
+    
     const {user, setUser} = useContext(TokenContext);
     const navigate = useNavigate();
-
+    
+    if (user.token !== '') navigate('/today');
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -66,6 +69,7 @@ function SignInScreen() {
     </$LoginScreen>
     )
 }
+
 
 export default SignInScreen;
 

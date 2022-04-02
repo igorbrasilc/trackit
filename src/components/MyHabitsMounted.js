@@ -87,6 +87,7 @@ const HabitWrapper = styled.main`
         &:hover {
             cursor: pointer;
             color: var(--color-logo-header);
+            font-size: 25px;
         }
     }
     h3 {

@@ -54,24 +54,29 @@ function CreateHabitBox(props) {
     function handleSubmit(event) {
         event.preventDefault();
 
-        setLoading(true);
-        setTimeout(() => {
-            axios.
-            post(URL, bodyPost, config)
-            .then(() => {
-                callbackBox(false);
-                setInputValue('');
-                setLoading(false);
-                setDaysPicked([]);
-                setRender(!render);
-            })
-            .catch(error => 
-                {
-                    console.log(error.response.data.message)
-                    alert('Deu um erro, você não selecionou um dia né malandrinho(a)?');
+        if (bodyPost.days.length !== 0) {
+            setLoading(true);
+            
+            setTimeout(() => {
+                axios.
+                post(URL, bodyPost, config)
+                .then(() => {
+                    callbackBox(false);
+                    setInputValue('');
                     setLoading(false);
+                    setDaysPicked([]);
+                    setRender(!render);
                 })
-        }, 1500);
+                .catch(error => 
+                    {
+                        console.log(error.response.data.message)
+                        alert('Deu um erro na criação, veja o console');
+                        setLoading(false);
+                    })
+            }, 1500);
+        } else {
+            alert('Por favor, selecione um dia, o hábito não pode ser atemporal');
+        }
     }
 
     return (

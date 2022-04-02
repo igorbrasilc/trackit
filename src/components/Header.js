@@ -14,6 +14,7 @@ function Header() {
         <>
             <HeaderWrapper>
                 <h1>TrackIt</h1>
+                <span>clique na foto para sair</span>
                 <img src={user.image} onClick={() => setPopUp(true)} alt='user-image' disabled={popUp} />
             </HeaderWrapper>
             {popUp === true ? <ChangeAccountPopUp callback={setPopUp} /> : <></>}
@@ -62,5 +63,12 @@ const HeaderWrapper = styled.header`
         line-height: 49px;
         color: #FFF;
         margin-left: 10px;
+    }
+
+    span {
+        font-family: var(--font-lexend);
+        font-size: 10px;
+        color: var(--color-button-link);
+        opacity: 0.6;
     }
 `
