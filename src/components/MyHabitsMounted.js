@@ -106,6 +106,7 @@ const $HabitWrapper = styled.main`
     margin-bottom: 10px;
     margin-left: 15px;
     margin-top: 13px;
+    margin-right: 30px;
   }
 
   .day-icons {
