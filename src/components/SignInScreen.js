@@ -151,6 +151,7 @@ const $LoginScreen = styled.main`
         color: var(--color-button-link);
         line-height: 17px;
         text-decoration-line: underline;
+        text-decoration-color: var(--color-button-link);
 
         &:hover {
             cursor: pointer;
