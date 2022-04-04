@@ -14,7 +14,7 @@ import TokenContext from '../contexts/TokenContext';
 
 function HabitScreen() {
 
-    const {user} = useContext(TokenContext);
+    const {user, setUser} = useContext(TokenContext);
 
     const [creationBox, setCreationBox] = useState(false);
     const [render, setRender] = useState(false);
@@ -23,7 +23,7 @@ function HabitScreen() {
     const [userHabitList, setUserHabitList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const URL_GET = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
+    const URL_GET_HABITS = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
     const config = {
         headers: {
@@ -37,7 +37,7 @@ function HabitScreen() {
 
         setTimeout(() => {
             axios.
-            get(URL_GET, config)
+            get(URL_GET_HABITS, config)
             .then(response => {
                 setUserHabitList(response.data);
                 setLoading(false);
@@ -71,7 +71,7 @@ function HabitScreen() {
     return (
         <>
             <Header />
-            <HabitScreenWrapper>
+            <$HabitScreenWrapper>
                 <div>
                     <h1>Meus hábitos</h1>
                     <span onClick={() => setCreationBox(true)} disabled={creationBox}>
@@ -80,7 +80,7 @@ function HabitScreen() {
                 </div>
                 {renderCreationBox}
                 {renderHabits}
-            </HabitScreenWrapper>
+            </$HabitScreenWrapper>
             <Footer />
         </>
     )
@@ -88,7 +88,7 @@ function HabitScreen() {
 
 export default HabitScreen;
 
-const HabitScreenWrapper = styled.main`
+const $HabitScreenWrapper = styled.main`
     margin-top: calc(var(--max-height-header) + 25px);
     margin-bottom: calc(var(--max-height-footer) + 40px);
     margin-left: 17px;

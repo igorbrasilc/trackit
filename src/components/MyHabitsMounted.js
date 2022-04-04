@@ -26,6 +26,20 @@ function MyHabitsMounted(props) {
     return "";
   }
 
+  function mountDays(days) {
+    const weekdays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+
+    return (
+      weekdays.map((day, index) => {
+        return (
+          <p id={index} className={verifySelect(index, days)}>
+            {day}
+          </p>
+        )
+      })
+    )
+  }
+
   function handleClick(id) {
     let confirmation = window.confirm(
       "Deseja excluir este hábito? Ele será apagado da sua semana, da sua vida e do seu ser... beba água"
@@ -50,40 +64,20 @@ function MyHabitsMounted(props) {
 
   return habitList.map((habit) => {
     return (
-      <HabitWrapper key={habit.id}>
+      <$HabitWrapper key={habit.id}>
         <h3>{habit.name}</h3>
         <BsTrash className={habit.id} onClick={() => handleClick(habit.id)} />
         <div className="day-icons">
-          <p id={0} className={verifySelect(0, habit.days)}>
-            D
-          </p>
-          <p id={1} className={verifySelect(1, habit.days)}>
-            S
-          </p>
-          <p id={2} className={verifySelect(2, habit.days)}>
-            T
-          </p>
-          <p id={3} className={verifySelect(3, habit.days)}>
-            Q
-          </p>
-          <p id={4} className={verifySelect(4, habit.days)}>
-            Q
-          </p>
-          <p id={5} className={verifySelect(5, habit.days)}>
-            S
-          </p>
-          <p id={6} className={verifySelect(6, habit.days)}>
-            S
-          </p>
+          {mountDays(habit.days)}
         </div>
-      </HabitWrapper>
+      </$HabitWrapper>
     );
   });
 }
 
 export default MyHabitsMounted;
 
-const HabitWrapper = styled.main`
+const $HabitWrapper = styled.main`
   display: flex;
   flex-direction: column;
   position: relative;

@@ -12,11 +12,11 @@ function Header() {
 
     return (
         <>
-            <HeaderWrapper>
+            < $HeaderWrapper>
                 <h1>TrackIt</h1>
                 <span>clique na foto para sair</span>
                 <img src={user.image} onClick={() => setPopUp(true)} alt='user-image' disabled={popUp} />
-            </HeaderWrapper>
+            </$HeaderWrapper>
             {popUp === true ? <ChangeAccountPopUp callback={setPopUp} /> : <></>}
         </>
     )
@@ -24,7 +24,7 @@ function Header() {
 
 export default Header;
 
-const HeaderWrapper = styled.header`
+const $HeaderWrapper = styled.header`
     z-index: 1;
     width: 100vw;
     height: auto;

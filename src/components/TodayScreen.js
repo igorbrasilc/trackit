@@ -86,8 +86,7 @@ function TodayScreen() {
     }
 
     function verifyRecord(cur, hig) {
-        if (cur === 0) return '';
-        else if (cur === hig) return 'green-text';
+        if (cur === hig) return 'green-text';
         else return '';
     }
 
@@ -176,8 +175,10 @@ const $TodayScreen = styled.main`
 
         & img {
             background-color: var(--color-uncheck);
-            padding: 20px;
-            margin: 13px;
+            padding: 12px;
+            margin-right: 10%;
+            margin-bottom: 5%;
+            margin-top: 5%;
             border-radius: 5px;
             border: 1px solid #e7e7e7;
 
@@ -197,9 +198,10 @@ const $TodayScreen = styled.main`
 
         & h3 {
             color: var(--color-text-black);
-            font-size: 20px;
+            font-size: 90%;
             line-height: 25px;
             margin-bottom: 7px;
+            margin-right: 15px;
         }
 
         & p {
