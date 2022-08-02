@@ -29,7 +29,7 @@ A simple task manager that allows you to set up daily habits and keep track of y
 ## :rocket: Layouts
 
 <p align="center">
-<a href="https://ibb.co/r71HysY"><img src="https://i.ibb.co/kHWXc1j/mockup.png" alt="mockup" border="0"></a>
+<a href="#"><img src="https://i.ibb.co/VBN54vc/mockup-trackit.png" alt="mockup-trackit" border="0" width="150px"></a>
 </p>
 
 
@@ -39,7 +39,7 @@ A simple task manager that allows you to set up daily habits and keep track of y
 First, clone the repo into your machine:
 
 ```
-git clone https://github.com/igorbrasilc/mywallet-front.git
+git clone https://github.com/igorbrasilc/trackit.git
 ```
 
 After, inside the folder where the repo was clonned, run the following command to install dependencies:
@@ -52,7 +52,5 @@ After that, you can run the script with:
 ```
 npm start
 ```
-
-:stop_sign: Don't forget to run the steps above with the [repositório](https://github.com/igorbrasilc/mywallet-back.git), which contains the backend of this app, so you can enjoy the project as a whole.
 
 
