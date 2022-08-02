@@ -29,7 +29,7 @@ A simple task manager that allows you to set up daily habits and keep track of y
 ## :rocket: Layouts
 
 <p align="center">
-<a href="#"><img src="https://i.ibb.co/VBN54vc/mockup-trackit.png" alt="mockup-trackit" border="0" width="150px"></a>
+<a href="#"><img src="https://i.ibb.co/VBN54vc/mockup-trackit.png" alt="mockup-trackit" border="0"></a>
 </p>
 
 
